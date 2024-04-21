@@ -1,6 +1,6 @@
 import express from 'express'
 import * as Sentry from '@sentry/node'
-import config from './util/config.js'
+import config from './utils/config.js'
 
 const app = express()
 
