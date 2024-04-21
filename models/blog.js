@@ -1,32 +1,32 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
 const blogSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: true
+    required: true,
   },
   content: {
     type: String,
-    required: true
+    required: true,
   },
   datecreated: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   datemodified: {
     type: Date,
-    default: Date.now
-  }
-})
-
-blogSchema.set('toJSON', {
-  transform: function (_doc, ret) {
-    ret.id = ret._id.toString()
-    delete ret._id
-    delete ret.__v
-  }
+    default: Date.now,
+  },
 });
 
-const Blog = mongoose.model('Blog', blogSchema)
+blogSchema.set("toJSON", {
+  transform: function (_doc, ret) {
+    ret.id = ret._id.toString();
+    delete ret._id;
+    delete ret.__v;
+  },
+});
 
-export default Blog
+const Blog = mongoose.model("Blog", blogSchema);
+
+export default Blog;
