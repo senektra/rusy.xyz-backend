@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose'
 
 const blogSchema = new mongoose.Schema({
   title: {
@@ -17,16 +17,16 @@ const blogSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-});
+})
 
-blogSchema.set("toJSON", {
+blogSchema.set('toJSON', {
   transform: function (_doc, ret) {
-    ret.id = ret._id.toString();
-    delete ret._id;
-    delete ret.__v;
+    ret.id = ret._id.toString()
+    delete ret._id
+    delete ret.__v
   },
-});
+})
 
-const Blog = mongoose.model("Blog", blogSchema);
+const Blog = mongoose.model('Blog', blogSchema)
 
-export default Blog;
+export default Blog
