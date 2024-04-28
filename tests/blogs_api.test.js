@@ -33,6 +33,20 @@ describe('GET requests at /api/blogs', () => {
   })
 })
 
+describe('POST requests at /api/blogs', () => {
+  beforeEach(doBeforeEach)
+
+  test('should create a new blog', async () => {
+    const response = await api
+      .post('/api/blogs')
+      .send(blogsHelper.mockedBlogs[0])
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+
+    assert.strictEqual(response.body.title, 'Blog 1')
+  })
+})
+
 after(async () => {
   await blogsHelper.deleteMockBlogs()
   mongoose.connection.close()

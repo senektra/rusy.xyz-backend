@@ -42,4 +42,5 @@ export default {
   getMockedBlogById,
   insertMockBlogs,
   deleteMockBlogs,
+  mockedBlogs,
 }

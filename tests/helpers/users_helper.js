@@ -4,8 +4,8 @@ import config from '../../utils/config.js'
 
 const usersToAdd = [
   {
-    username: config.webmasterUsername,
-    password: config.webmasterPassword,
+    username: config.webmaster.username,
+    password: config.webmaster.password,
   },
 ]
 

@@ -26,14 +26,14 @@ if (config.live) {
 }
 
 // Check if webmaster user exists
-const webmaster = await User.findOne({ username: config.webmasterUsername })
+const webmaster = await User.findOne({ username: config.webmaster.username })
 if (!webmaster) {
   logger.warn('No webmaster user found, creating one')
   const passwordHash = bcrypt.hashSync(
-    config.webmasterPassword,
+    config.webmaster.password,
     config.saltRounds,
   )
-  const user = new User({ username: config.webmasterUsername, passwordHash })
+  const user = new User({ username: config.webmaster.username, passwordHash })
   await user.save()
   logger.info('Webmaster user created')
 }

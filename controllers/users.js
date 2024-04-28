@@ -13,6 +13,11 @@ const createUserQuery = (username) => ({
   username: { $regex: new RegExp(`${username}`, 'i') },
 })
 
+const validateUser = (username, password) => {
+  if (!username) throw userError.noUsername
+  if (!password) throw userError.noPassword
+}
+
 // GET Requests
 
 usersRouter.get('/', async (_req, res) => {
@@ -32,6 +37,8 @@ usersRouter.get('/:id', async (req, res) => {
 
 usersRouter.post('/login', async (req, res) => {
   const { username, password } = req.body
+
+  validateUser(username, password)
 
   const user = await User.findOne(createUserQuery(username))
 

@@ -14,8 +14,10 @@ const config = {
   env: ENV,
   live: ENV === 'production',
   // Webmaster
-  webmasterUsername: process.env.WEBMASTER_USERNAME,
-  webmasterPassword: process.env.WEBMASTER_PASSWORD,
+  webmaster: {
+    username: process.env.WEBMASTER_USERNAME,
+    password: process.env.WEBMASTER_PASSWORD,
+  },
   // MongoDB
   mongodbUri:
     ENV === 'testing'
