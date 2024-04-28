@@ -1,10 +1,15 @@
 import express from 'express'
+import bcrypt from 'bcrypt'
+import 'express-async-errors'
 import * as Sentry from '@sentry/node'
 import cors from 'cors'
 import config from './utils/config.js'
 import mongoose from 'mongoose'
+import logger from './utils/logger.js'
 import middleware from './utils/middleware.js'
 import blogsRouter from './controllers/blogs.js'
+import usersRouter from './controllers/users.js'
+import User from './models/user.js'
 
 mongoose.connect(config.mongodbUri)
 
@@ -20,7 +25,21 @@ if (config.live) {
   app.use(Sentry.Handlers.tracingHandler())
 }
 
+// Check if webmaster user exists
+const webmaster = await User.findOne({ username: config.webmasterUsername })
+if (!webmaster) {
+  logger.warn('No webmaster user found, creating one')
+  const passwordHash = bcrypt.hashSync(
+    config.webmasterPassword,
+    config.saltRounds,
+  )
+  const user = new User({ username: config.webmasterUsername, passwordHash })
+  await user.save()
+  logger.info('Webmaster user created')
+}
+
 app.use('/api/blogs', blogsRouter)
+app.use('/api/users', usersRouter)
 
 if (config.live) app.use(Sentry.Handlers.errorHandler())
 

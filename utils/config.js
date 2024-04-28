@@ -5,34 +5,40 @@ import logger from './logger.js'
 import 'dotenv/config'
 
 const defaultPort = 3001
+const ENV = process.env.NODE_ENV
 
 const config = {
+  // Server general
+  port: process.env.PORT,
+  // Environment
+  env: ENV,
+  live: ENV === 'production',
+  // Webmaster
+  webmasterUsername: process.env.WEBMASTER_USERNAME,
+  webmasterPassword: process.env.WEBMASTER_PASSWORD,
+  // MongoDB
+  mongodbUri:
+    ENV === 'testing'
+      ? process.env.MONGODB_URI_TEST
+      : process.env.MONGODB_URI_PROD,
+  // Sentry
   SentryOptions: (app) => ({
     dsn: process.env.SENTRY_DSN,
     integrations: [
-      // enable HTTP calls tracing
       new Sentry.Integrations.Http({ tracing: true }),
-      // enable Express.js middleware tracing
       new Sentry.Integrations.Express({ app }),
       nodeProfilingIntegration(),
     ],
-    // Performance Monitoring
-    tracesSampleRate: 1.0, //  Capture 100% of the transactions
-    // Set sampling rate for profiling - this is relative to tracesSampleRate
+    tracesSampleRate: 1.0,
     profilesSampleRate: 1.0,
   }),
-  env: process.env.NODE_ENV,
-  live: process.env.NODE_ENV === 'production',
-  mongodbUri:
-    process.env.NODE_ENV === 'testing'
-      ? process.env.MONGODB_URI_TEST
-      : process.env.MONGODB_URI_PROD,
-  port: process.env.PORT,
+  // Morgan
   morganTokens: [
     { type: 'body', func: (req, _res) => JSON.stringify(req.body) },
   ],
   morganFormat:
     ':method :url :status :res[content-length] - :response-time ms :body',
+  // JWT
   saltRounds: 10,
 }
 

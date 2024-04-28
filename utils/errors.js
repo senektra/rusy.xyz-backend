@@ -10,6 +10,7 @@ export const createError = (status, name, message) => {
 }
 
 export const userError = {
+  notFound: createUserError(404, 'User not found'),
   noUsername: createUserError(400, 'No username provided'),
   usernameTaken: createUserError(400, 'Username is taken'),
   usernameTooShort: createUserError(400, 'Username is too short'),

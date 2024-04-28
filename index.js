@@ -1,5 +1,5 @@
-import config from './util/config.js'
-import logger from './util/logger.js'
+import config from './utils/config.js'
+import logger from './utils/logger.js'
 import app from './app.js'
 
 app.listen(config.port, () => {

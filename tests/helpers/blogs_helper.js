@@ -9,15 +9,15 @@ const mockedBlogs = [
   {
     title: 'Blog 1',
     content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    createdAt: new Date(),
-    updatedAt: new Date(getDateTwoDaysLater(new Date())),
+    dateCreated: new Date(),
+    dateModified: new Date(getDateTwoDaysLater(new Date())),
   },
   {
     title: 'Blog 2',
     content:
       'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    createdAt: new Date(),
-    updatedAt: new Date(getDateTwoDaysLater(new Date())),
+    dateCreated: new Date(),
+    dateModified: new Date(getDateTwoDaysLater(new Date())),
   },
 ]
 

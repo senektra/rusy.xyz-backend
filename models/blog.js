@@ -9,11 +9,11 @@ const blogSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  datecreated: {
+  dateCreated: {
     type: Date,
     default: Date.now,
   },
-  datemodified: {
+  dateModified: {
     type: Date,
     default: Date.now,
   },
