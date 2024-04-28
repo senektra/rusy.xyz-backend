@@ -1,15 +1,29 @@
 import { test, describe, beforeEach, after } from 'node:test'
 import assert from 'node:assert'
 import supertest from 'supertest'
+import config from '../utils/config.js'
 import app from '../app.js'
 import blogsHelper from './helpers/blogs_helper.js'
 import mongoose from 'mongoose'
 
 const api = supertest.agent(app)
 
-const doBeforeEach = async () => {
+const doBeforeEach = async (loginWithWebmaster) => {
   await blogsHelper.deleteMockBlogs()
   await blogsHelper.insertMockBlogs()
+  if (loginWithWebmaster) {
+    const res = await api
+      .post('/api/users/login')
+      .send({
+        username: config.webmaster.username,
+        password: config.webmaster.password,
+      })
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+
+    assert(res.body.token)
+    api.auth(res.body.token, { type: 'bearer' })
+  }
 }
 
 describe('GET requests at /api/blogs', () => {

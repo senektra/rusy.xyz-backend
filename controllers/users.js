@@ -1,8 +1,7 @@
 import { Router } from 'express'
 import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
+import auth from '../utils/auth.js'
 import User from '../models/user.js'
-// import config from '../utils/config.js'
 import { userError } from '../utils/errors.js'
 import 'dotenv/config'
 
@@ -49,13 +48,10 @@ usersRouter.post('/login', async (req, res) => {
     throw userError.badLogin
   }
 
-  const token = jwt.sign(
-    {
-      username: user.username,
-      id: user._id,
-    },
-    process.env.TOKEN_SECRET,
-  )
+  const token = auth.generateAccessToken({
+    username: user.username,
+    id: user._id,
+  })
 
   res.status(200).json({ token, username: user.username, name: user.name })
 })
