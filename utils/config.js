@@ -20,9 +20,9 @@ const config = {
   },
   // MongoDB
   mongodbUri:
-    ENV === 'testing'
-      ? process.env.MONGODB_URI_TEST
-      : process.env.MONGODB_URI_PROD,
+    ENV === 'production'
+      ? process.env.MONGODB_URI_PROD
+      : process.env.MONGODB_URI_TEST,
   // Sentry
   SentryOptions: (app) => ({
     dsn: process.env.SENTRY_DSN,
